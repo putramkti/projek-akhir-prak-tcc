@@ -907,12 +907,13 @@ a:hover{
   margin: 0 auto;
 }
 
-.logout{
+#logout{
   color: #ffffff;
-  background: transparent;
+  transition: 0.2s;
 }
-.logout :hover{
+#logout :hover{
   color: #735ac7;
-  background: transparent;
+  text-decoration: underline;
+  cursor: pointer;
 }
 /* POPUP */

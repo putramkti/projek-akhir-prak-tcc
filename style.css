@@ -907,7 +907,12 @@ a:hover{
   margin: 0 auto;
 }
 
+.logout{
+  color: #ffffff;
+  background: transparent;
+}
 .logout :hover{
   color: #735ac7;
+  background: transparent;
 }
 /* POPUP */

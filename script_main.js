@@ -23,6 +23,7 @@ window.addEventListener("DOMContentLoaded", (ev)=>{
         namaElement.textContent = namaPendek;
     }else{
         namaElement.textContent = nama;
+    }
     setGenres();
     
     //  set arrow movement for categories

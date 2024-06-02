@@ -386,7 +386,7 @@ function tampilPopupForm(id_film = null) {
   
 }
 
-function tampilPopupForm(id_film) {
+function tampilPopupDetail(id_film) {
  
     btnForm.innerText = "Edit Film";
   

@@ -16,7 +16,7 @@ window.addEventListener("DOMContentLoaded", (ev)=>{
       return; 
     }
 
-    document.querySelector(".nama").innerText = localStorage.getItem("nama");
+    document.querySelector("#nama").innerText = localStorage.getItem("nama");
 
     setGenres();
     

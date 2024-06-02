@@ -4,7 +4,17 @@ const BASE_url_film = 'https://film-vxzec2b7pa-et.a.run.app';
 
 // run after loading page
 window.addEventListener("DOMContentLoaded", (ev)=>{
-
+  if (!localStorage.getItem('statusLogin')) {
+    swal({
+      title: "Belum Login",
+      text: "Silahkan login terlebih dahulu",
+      icon: "warning",
+      button: "OK",
+    }).then(() => {
+      window.location.href = 'login.html';
+    });
+    return; 
+  }
     setGenres();
     
     //  set arrow movement for categories

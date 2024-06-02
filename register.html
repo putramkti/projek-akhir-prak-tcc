@@ -30,6 +30,18 @@
     const passwordInput = document.querySelector('#password');
     const registerButton = document.querySelector('#btnRegister');
 
+    if (localStorage.getItem('statusLogin')) {
+      swal({
+        title: "Anda Sudah Login",
+        text: "Anda sudah login sebelumnya.",
+        icon: "warning",
+        button: "OK",
+      }).then(() => {
+        window.location.href = 'index.html';
+      });
+      return; 
+    }
+
     registerButton.addEventListener('click', () => {
       const nama = namaInput.value;
       const email = emailInput.value;

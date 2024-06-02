@@ -907,4 +907,7 @@ a:hover{
   margin: 0 auto;
 }
 
+.logout :hover{
+  color: #735ac7;
+}
 /* POPUP */

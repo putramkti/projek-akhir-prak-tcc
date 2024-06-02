@@ -42,6 +42,22 @@ window.addEventListener("DOMContentLoaded", (ev)=>{
 
 })
 
+const logout = document.querySelector(".logout");
+logout.addEventListener("click", (e) =>{
+  localStorage.removeItem('statusLogin');
+  localStorage.removeItem('id_user');
+  localStorage.removeItem('nama');
+  swal({
+    title: "Logout Berhasil",
+    text: "Anda telah berhasil logout!",
+    icon: "success",
+    button: "OK",
+  }).then(() => {
+      window.location.href = 'login.html';
+  });
+
+})
+
 const formulir = document.querySelector("#formulir");
 
 formulir.addEventListener("submit", (e) => {

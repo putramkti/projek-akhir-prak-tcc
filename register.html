@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Registrasi</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Font Awesome Cdn Link -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+</head>
+<body>
+  <div class="wrapper">
+    <h1>Registrasi</h1>
+    <form>
+      <input type="text" placeholder="Nama" id="nama">
+      <input type="text" placeholder="Email" id="email">
+      <input type="password" placeholder="Password" id="password">
+    </form>
+    <button id="btnRegister" class="btncuy">Register</button>
+    <div class="already-member">
+      Sudah punya akun? <a href="login.html">Login disini</a>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script>
+    const BASE_URL = 'http://localhost:3100/user/register';
+    const namaInput = document.querySelector('#nama');
+    const emailInput = document.querySelector('#email');
+    const passwordInput = document.querySelector('#password');
+    const registerButton = document.querySelector('#btnRegister');
+
+    registerButton.addEventListener('click', () => {
+      const nama = namaInput.value;
+      const email = emailInput.value;
+      const password = passwordInput.value;
+
+      axios.post(BASE_URL, { nama, email, password })
+        .then(response => {
+          const { status, message } = response.data;
+          if (status === 'Success') {
+            swal({
+              title: "Registrasi Berhasil",
+              text: message,
+              icon: "success",
+              button: "OK",
+            }).then(() => {
+              window.location.href = 'login.html'; // Redirect to login page
+            });
+          } else {
+            swal({
+              title: "Registrasi Gagal",
+              text: message,
+              icon: "error",
+              button: "OK",
+            });
+          }
+        })
+        .catch(error => {
+          console.error('Registration error:', error);
+          swal({
+            title: "Error",
+            text: error.response.data.message[0],
+            icon: "error",
+            button: "OK",
+          });
+        });
+    });
+  </script>
+</body>
+</html>

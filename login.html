@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Font Awesome Cdn Link -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+</head>
+<body>
+  <div class="wrapper">
+    <h1>Hallo!</h1>
+    <form>
+      <input type="text" placeholder="Email" id="email">
+      <input type="password" placeholder="Password" id="password">
+    </form>
+    <button id="btnLogin" class="btncuy">Login</button>
+    <div class="not-member">
+      Tidak punya akun? <a href="register.html">Registrasi dulu</a>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script>
+    const BASE_URL = 'http://localhost:3100/user/login';
+    const emailInput = document.querySelector('#email');
+    const passwordInput = document.querySelector('#password');
+    const loginButton = document.querySelector('#btnLogin');
+
+    loginButton.addEventListener('click', () => {
+      const email = emailInput.value;
+      const password = passwordInput.value;
+
+      axios.post(BASE_URL, { email, password })
+        .then(response => {
+          const { status, message, user } = response.data;
+          if (status === 'Success') {
+            swal({
+                title: "Login Berhasil",
+                text: message,
+                icon: "success",
+                button: "OK",
+            }).then(() => {
+                localStorage.setItem('statusLogin', true);
+                localStorage.setItem('id_user', user.id);
+                window.location.href = 'index.html';
+                console.log('Login success:', user);
+            });
+          } else {
+            swal({
+                title: "Login Gagal",
+                text: message,
+                icon: "error",
+                button: "OK",
+            });
+          }
+        })
+        .catch(error => {
+          console.error('login error:', error);
+          swal({
+            title: "Error",
+            text: error.response.data.message,
+            icon: "error",
+            button: "OK",
+          });
+        });
+    });
+  </script>
+  
+</body>
+</html>

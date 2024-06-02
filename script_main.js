@@ -387,8 +387,6 @@ function tampilPopupForm(id_film = null) {
 }
 
 function tampilPopupDetail(id_film) {
- 
-    btnForm.innerText = "Edit Film";
   
     axios
     .get(`${BASE_url}/film/${id_film}`)
@@ -400,8 +398,6 @@ function tampilPopupDetail(id_film) {
       gambarPoster.style.display = "block";
 
       document.getElementById("judul-film").value = film.judul;
-      document.getElementById("judul-film").dataset.id = film.id_film;
-      // const poster = document.getElementById("poster-film").value = film.poster;
       document.getElementById("tahun_rilis-film").value = film.tahun_rilis;
       document.getElementById("genre-film").value = film.genre;
       document.getElementById("rating-film").value = film.rating;

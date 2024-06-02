@@ -397,12 +397,12 @@ function tampilPopupDetail(id_film) {
       gambarPoster.src = film.poster
       gambarPoster.style.display = "block";
 
-      document.getElementById("judul-film").value = film.judul;
-      document.getElementById("tahun_rilis-film").value = film.tahun_rilis;
-      document.getElementById("genre-film").value = film.genre;
-      document.getElementById("rating-film").value = film.rating;
-      document.getElementById("direktor-film").value = film.direktor;
-      document.getElementById("plot-film").value = film.plot;
+      document.getElementById("judul-film").innerText = film.judul;
+      document.getElementById("tahun_rilis-film").innerText = film.tahun_rilis;
+      document.getElementById("genre-film").innerText = film.genre;
+      document.getElementById("rating-film").innerText = film.rating;
+      document.getElementById("direktor-film").innerText = film.direktor;
+      document.getElementById("plot-film").innerText = film.plot;
       
       
     })
@@ -412,7 +412,7 @@ function tampilPopupDetail(id_film) {
 
  
   const overlayContent = document.getElementById('overlay-content');
-  document.getElementById("popup-form").style.width = "100%";
+  document.getElementById("popup-detail").style.width = "100%";
 
   
 }

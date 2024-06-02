@@ -1,5 +1,5 @@
 
-const BASE_url = 'http://localhost:3100';
+const BASE_url_film = 'https://film-vxzec2b7pa-et.a.run.app';
 
 
 // run after loading page
@@ -51,7 +51,7 @@ function tambahOrEdit(){
   if (id_film == "") {
     // Tambah catatan
     axios
-      .post(`${BASE_url}/film`, {
+      .post(`${BASE_url_film}/film`, {
         judul,
         poster,
         tahun_rilis,
@@ -82,7 +82,7 @@ function tambahOrEdit(){
       .catch((error) => console.log(error));
   } else {
     axios
-      .put(`${BASE_url}/film/${id_film}`, {
+      .put(`${BASE_url_film}/film/${id_film}`, {
         judul,
         poster,
         tahun_rilis,
@@ -139,7 +139,7 @@ function setGenres(){
     let genres = []
     // console.log(tags_el);
     axios
-    .get(BASE_url + "/film/genres")
+    .get(BASE_url_film + "/film/genres")
     .then(({ data }) => {
       const { data: genres_data } = data;
       genres = genres_data;
@@ -163,8 +163,6 @@ function loadGenres(genres) {
         selectedGenre = t.textContent
           console.log(selectedGenre)
         
-        // let newurl = API_url + '&with_genres=' + encodeURI(selectedGenre.join(','));
-        // let whichPage = localStorage.getItem('page');
         t.classList.toggle("active");
         if(t.classList.contains("active")){
 
@@ -193,8 +191,6 @@ const manageIcons = ()=>{
         leftArrowContainer.classList.remove("active")
     }
     let maxScrollValue = tagsEl.scrollWidth - tagsEl.clientWidth - 20;
-    // console.log(tagsEl.scrollWidth);
-    // console.log(tagsEl.clientWidth);
 
     if(tagsEl.scrollLeft >= maxScrollValue){
         rightArrowContainer.classList.remove("active")
@@ -212,13 +208,13 @@ function removeActive(){
     })
 }
 
-// Asynchronous function which loads data from API 
+// function meload data dari API
 function LoadMovie(genre = "semua"){
   let api_url;
     if(genre == "semua"){
-      api_url = BASE_url + "/film";
+      api_url = BASE_url_film + "/film";
     }else{
-      api_url = BASE_url + "/film/genre/" + genre;
+      api_url = BASE_url_film + "/film/genre/" + genre;
     }
     axios
     .get(api_url)
@@ -297,7 +293,7 @@ function hapusFilm(id_film) {
   }).then((result) => {
     if(result){
       axios
-        .delete(`${BASE_url}/film/${id_film}`)
+        .delete(`${BASE_url_film}/film/${id_film}`)
         .then(() => {
           LoadMovie();
           setGenres();
@@ -319,50 +315,7 @@ function getColor(vote){
       return 'red'
     }
 }
-  
-// search functionality for searching the results
-function searchResultsAndDisplayWrapper(ev){
-    let whichPage = localStorage.getItem('page');
 
-    if(ev.target.value == ''){
-        // when the search field is empty for TV or Movie 
-        if(whichPage == 'movie'){
-            LoadMovieOrTv(whichPage, API_url);
-        }
-        else if (whichPage == 'tv'){
-            LoadMovieOrTv(whichPage, TV_url);
-
-        }
-    }
-    else{
-        // when the search field is NOT empty for TV or Movie 
-        if(whichPage == 'movie'){
-            let url_search = SEARCH_url + ev.target.value;
-            LoadMovieOrTv(whichPage, url_search);
-        }
-        else if (whichPage == 'tv'){
-            let url_search = TV_Search_url + ev.target.value;
-            LoadMovieOrTv(whichPage, url_search);
-        }
-
-    }
-}
-function searchAndDisplay(func, delay){
-    let timer;
-
-    return function (){
-        let context = this,
-            arg = arguments;
-
-        clearTimeout(timer);
-
-        timer = setTimeout(()=>{
-            func.apply(context, arguments);
-
-        }, delay)
-    }
-}
-const searchStart = searchAndDisplay(searchResultsAndDisplayWrapper, 900);
 
 
 function tampilPopupForm(id_film = null) {
@@ -371,7 +324,7 @@ function tampilPopupForm(id_film = null) {
     btnForm.innerText = "Edit Film";
   
     axios
-    .get(`${BASE_url}/film/${id_film}`)
+    .get(`${BASE_url_film}/film/${id_film}`)
     .then(({ data }) => {
       const { data: film } = data;
 

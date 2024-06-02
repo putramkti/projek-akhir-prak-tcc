@@ -430,7 +430,7 @@ function closeNav() {
     overlay.style.width = "0%";
 }
 
-function closeNavDetails() {
+function closeNavDetail() {
   bersihinForm()
   const overlay = document.getElementById("popup-detail");
   overlay.style.width = "0%";

@@ -38,7 +38,6 @@ window.addEventListener("DOMContentLoaded", (ev)=>{
 
     
     let searchBar = document.querySelector('.search');
-    searchBar.addEventListener('input', searchStart);
 
 
 })
@@ -331,51 +330,6 @@ function getColor(vote){
       return 'red'
     }
 }
-  
-// // search functionality for searching the results
-// function searchResultsAndDisplayWrapper(ev){
-//     let whichPage = localStorage.getItem('page');
-
-//     if(ev.target.value == ''){
-//         // when the search field is empty for TV or Movie 
-//         if(whichPage == 'movie'){
-//             LoadMovieOrTv(whichPage, API_url);
-//         }
-//         else if (whichPage == 'tv'){
-//             LoadMovieOrTv(whichPage, TV_url);
-
-//         }
-//     }
-//     else{
-//         // when the search field is NOT empty for TV or Movie 
-//         if(whichPage == 'movie'){
-//             let url_search = SEARCH_url + ev.target.value;
-//             LoadMovieOrTv(whichPage, url_search);
-//         }
-//         else if (whichPage == 'tv'){
-//             let url_search = TV_Search_url + ev.target.value;
-//             LoadMovieOrTv(whichPage, url_search);
-//         }
-
-//     }
-// }
-// function searchAndDisplay(func, delay){
-//     let timer;
-
-//     return function (){
-//         let context = this,
-//             arg = arguments;
-
-//         clearTimeout(timer);
-
-//         timer = setTimeout(()=>{
-//             func.apply(context, arguments);
-
-//         }, delay)
-//     }
-// }
-// const searchStart = searchAndDisplay(searchResultsAndDisplayWrapper, 900);
-
 
 function tampilPopupForm(id_film = null) {
   const btnForm = document.querySelector("#btn-form");

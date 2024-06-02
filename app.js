@@ -8,6 +8,9 @@ app.use(cors());
 app.use(express.json());
 app.use("/film", filmRouter);
 
+app.get("/", (req, res) => {
+  res.send("Halaman film service");
+});
 
 app.listen(port, () => {
   console.log("Server Connected on PORT: " + port + "/");

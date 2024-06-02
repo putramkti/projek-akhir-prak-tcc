@@ -42,7 +42,7 @@ window.addEventListener("DOMContentLoaded", (ev)=>{
 
 })
 
-const logout = document.querySelector(".logout");
+const logout = document.querySelector("#logout");
 logout.addEventListener("click", ()=>{
   localStorage.removeItem('statusLogin');
   localStorage.removeItem('id_user');

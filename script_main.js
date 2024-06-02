@@ -42,22 +42,22 @@ window.addEventListener("DOMContentLoaded", (ev)=>{
 
 
 })
-const logout = document.querySelector(".logout");
-logout.addEventListener("click", (e) =>{
-  e.preventDefault();
-  localStorage.removeItem('statusLogin');
-  localStorage.removeItem('id_user');
-  localStorage.removeItem('nama');
-  swal({
-    title: "Logout Berhasil",
-    text: "Anda telah berhasil logout!",
-    icon: "success",
-    button: "OK",
-  }).then(() => {
-      window.location.href = 'login.html';
-  });
+// const logout = document.querySelector(".logout");
+// logout.addEventListener("click", (e) =>{
+//   e.preventDefault();
+//   localStorage.removeItem('statusLogin');
+//   localStorage.removeItem('id_user');
+//   localStorage.removeItem('nama');
+//   swal({
+//     title: "Logout Berhasil",
+//     text: "Anda telah berhasil logout!",
+//     icon: "success",
+//     button: "OK",
+//   }).then(() => {
+//       window.location.href = 'login.html';
+//   });
 
-})
+// })
 const formulir = document.querySelector("#formulir");
 
 formulir.addEventListener("submit", (e) => {
@@ -160,8 +160,8 @@ function topFunction() {
   document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
 }
 
-// set all genres on the page
-let selectedGenre;
+// // set all genres on the page
+// let selectedGenre;
 function setGenres(){
     
     let genres = []

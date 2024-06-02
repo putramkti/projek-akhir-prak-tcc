@@ -8,6 +8,9 @@ app.use(cors());
 app.use(express.json());
 app.use("/user", userRouter);
 
+app.get("/", (req, res) => {
+  res.send("Halaman user service");
+});
 
 app.listen(port, () => {
   console.log("Server Connected on PORT: " + port + "/");

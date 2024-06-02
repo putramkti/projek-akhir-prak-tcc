@@ -4,17 +4,20 @@ const BASE_url_film = 'https://film-vxzec2b7pa-et.a.run.app';
 
 // run after loading page
 window.addEventListener("DOMContentLoaded", (ev)=>{
-  if (!localStorage.getItem('statusLogin')) {
-    swal({
-      title: "Belum Login",
-      text: "Silahkan login terlebih dahulu",
-      icon: "warning",
-      button: "OK",
-    }).then(() => {
-      window.location.href = 'login.html';
-    });
-    return; 
-  }
+    if (!localStorage.getItem('statusLogin')) {
+      swal({
+        title: "Belum Login",
+        text: "Silahkan login terlebih dahulu",
+        icon: "warning",
+        button: "OK",
+      }).then(() => {
+        window.location.href = 'login.html';
+      });
+      return; 
+    }
+
+    document.querySelector(".nama").innerText = localStorage.getItem("nama");
+  
     setGenres();
     
     //  set arrow movement for categories
@@ -39,7 +42,22 @@ window.addEventListener("DOMContentLoaded", (ev)=>{
 
 
 })
+const logout = document.querySelector(".logout");
+logout.addEventListener("click", (e) =>{
+  e.preventDefault();
+  localStorage.removeItem('statusLogin');
+  localStorage.removeItem('id_user');
+  localStorage.removeItem('nama');
+  swal({
+    title: "Logout Berhasil",
+    text: "Anda telah berhasil logout!",
+    icon: "success",
+    button: "OK",
+  }).then(() => {
+      window.location.href = 'login.html';
+  });
 
+})
 const formulir = document.querySelector("#formulir");
 
 formulir.addEventListener("submit", (e) => {

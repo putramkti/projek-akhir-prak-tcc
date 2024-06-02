@@ -56,6 +56,7 @@
             }).then(() => {
                 localStorage.setItem('statusLogin', true);
                 localStorage.setItem('id_user', user.id);
+                localStorage.setItem('nama', user.nama);
                 window.location.href = 'index.html';
                 console.log('Login success:', user);
             });

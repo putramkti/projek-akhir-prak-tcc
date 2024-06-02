@@ -15,9 +15,14 @@ window.addEventListener("DOMContentLoaded", (ev)=>{
       });
       return; 
     }
+    const namaElement = document.getElementById("nama");
+    const nama = localStorage.getItem("nama");
 
-    document.querySelector("#nama").innerText = localStorage.getItem("nama");
-
+    if (nama.length > 10) {
+        const namaPendek = nama.substring(0, 10) + "...";
+        namaElement.textContent = namaPendek;
+    }else{
+        namaElement.textContent = nama;
     setGenres();
     
     //  set arrow movement for categories

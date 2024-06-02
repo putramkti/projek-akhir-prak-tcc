@@ -403,12 +403,12 @@ function tampilPopupDetail(id_film) {
       gambarPoster.src = film.poster
       gambarPoster.style.display = "block";
 
-      document.getElementById("judul-film").innerText = film.judul;
-      document.getElementById("tahun_rilis-film").innerText = film.tahun_rilis;
-      document.getElementById("genre-film").innerText = film.genre;
-      document.getElementById("rating-film").innerText = film.rating;
-      document.getElementById("direktor-film").innerText = film.direktor;
-      document.getElementById("plot-film").innerText = film.plot;
+      document.getElementById("judul-film").innerText ="Judul : " + film.judul;
+      document.getElementById("tahun-rilis-film").innerText = "Tahun Rilis : " + film.tahun_rilis;
+      document.getElementById("genre-film").innerText = "Genre : " +film.genre;
+      document.getElementById("rating-film").innerText = "Rating : " +film.rating +"/10";
+      document.getElementById("direktor-film").innerText = "Direktor : "+film.direktor;
+      document.getElementById("plot-film").innerText = "Plot : "+film.plot;
       
       
     })

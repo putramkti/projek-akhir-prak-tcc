@@ -916,4 +916,13 @@ a:hover{
   text-decoration: underline;
   cursor: pointer;
 }
+
+.p-popup{
+  color: white;
+  font-weight: bold;
+  display: block;
+  text-align: left;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
 /* POPUP */

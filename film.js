@@ -31,12 +31,12 @@ const upload = multer({
 
 // Validasi untuk input film
 const validateFilmInput = [
-    check('id_user').notEmpty().withMessage('ID User tidak boleh kosong'),
     check('judul').notEmpty().withMessage('Judul tidak boleh kosong'),
     check('tahun_rilis').isInt({ min: 1000, max: new Date().getFullYear() }).withMessage('Tahun terbit harus dalam format tahun'),
     check('direktor').notEmpty().withMessage('Direktor tidak boleh kosong'),
     check('genre').notEmpty().withMessage('Genre tidak boleh kosong'),
-    check('plot').notEmpty().withMessage('Plot tidak boleh kosong')
+    check('plot').notEmpty().withMessage('Plot tidak boleh kosong'),
+    check('rating').notEmpty().withMessage('rating tidak boleh kosong')
 ];
 
 // Menampilkan semua film
@@ -67,7 +67,7 @@ router.post("/", upload.single('poster'), validateFilmInput, async (req, res) =>
             return res.status(400).json({ errors: errors.array() });
         }
 
-        const { id_user, judul, tahun_rilis, direktor, genre, plot } = req.body;
+        const {  judul, tahun_rilis, direktor, genre, plot, rating } = req.body;
         const posterFile = req.file;
 
         // Generate nama unik untuk file poster menggunakan timestamp dan MD5
@@ -77,8 +77,8 @@ router.post("/", upload.single('poster'), validateFilmInput, async (req, res) =>
         const posterUrl = await uploadPosterToCloudStorage(posterFile, posterFileName);
 
         // Execute query ke database
-        const command = "INSERT INTO film (id_user, judul, tahun_rilis, direktor, genre, plot, poster) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        await connection.promise().query(command, [id_user, judul, tahun_rilis, direktor, genre, plot, posterUrl]);
+        const command = "INSERT INTO film ( judul, tahun_rilis, direktor, genre, plot, poster, rating) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        await connection.promise().query(command, [ judul, tahun_rilis, direktor, genre, plot, posterUrl, rating]);
 
         // mengirimkan respons jika berhasil
         res.status(201).json({
@@ -167,7 +167,7 @@ router.get("/:id", async (req, res) => {
 });
 
 // Edit film berdasarkan ID film
-router.put("/:id", validateFilmInput, async (req, res) => {
+router.put("/:id", upload.single('poster'), validateFilmInput, async (req, res) => {
     try {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -175,7 +175,8 @@ router.put("/:id", validateFilmInput, async (req, res) => {
         }
 
         const { id } = req.params;
-        const { id_user, judul, tahun_rilis, direktor, genre, plot } = req.body;
+        const { judul, tahun_rilis, direktor, genre, plot, rating } = req.body;
+        const posterFile = req.file;
 
         // Periksa apakah film dengan ID yang diberikan ada
         const [existingFilm] = await connection.promise().query("SELECT * FROM film WHERE id_film = ?", [id]);
@@ -183,9 +184,19 @@ router.put("/:id", validateFilmInput, async (req, res) => {
             return res.status(404).json({ message: 'Film tidak ditemukan' });
         }
 
+        let posterUrl = existingFilm[0].poster; // Poster URL default
+
+        if (posterFile) {
+            // Generate nama unik untuk file poster menggunakan timestamp dan MD5
+            const posterFileName = generateFileName(posterFile.originalname);
+
+            // Upload gambar poster baru ke Google Cloud Storage
+            posterUrl = await uploadPosterToCloudStorage(posterFile, posterFileName);
+        }
+
         // Update data film sesuai dengan input yang diberikan
-        const command = "UPDATE film SET id_user = ?, judul = ?, tahun_rilis = ?, direktor = ?, genre = ?, plot = ? WHERE id_film = ?";
-        await connection.promise().query(command, [id_user, judul, tahun_rilis, direktor, genre, plot, id]);
+        const command = "UPDATE film SET judul = ?, tahun_rilis = ?, direktor = ?, genre = ?, plot = ?, rating = ?, poster = ? WHERE id_film = ?";
+        await connection.promise().query(command, [judul, tahun_rilis, direktor, genre, plot, rating, posterUrl, id]);
 
         // mengirimkan respons jika berhasil
         res.status(200).json({
@@ -201,6 +212,33 @@ router.put("/:id", validateFilmInput, async (req, res) => {
     }
 });
 
+// Hapus film berdasarkan ID film
+router.delete("/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        // Periksa apakah film dengan ID yang diberikan ada
+        const [existingFilm] = await connection.promise().query("SELECT * FROM film WHERE id_film = ?", [id]);
+        if (existingFilm.length === 0) {
+            return res.status(404).json({ message: 'Film tidak ditemukan' });
+        }
+
+        // Execute query ke database untuk menghapus film berdasarkan ID
+        await connection.promise().query("DELETE FROM film WHERE id_film = ?", [id]);
+
+        // mengirimkan respons jika berhasil
+        res.status(200).json({
+            status: "Success",
+            message: "Berhasil menghapus film",
+        });
+    } catch (error) {
+        // mengirimkan respons jika gagal
+        res.status(error.statusCode || 500).json({
+            status: "Error",
+            message: error.message,
+        });
+    }
+});
 
 
 
@@ -222,7 +260,7 @@ async function uploadPosterToCloudStorage(posterFile, posterFileName) {
     await file.save(fileBuffer);
 
     // Mendapatkan URL publik untuk akses gambar poster
-    const posterUrl = `https://storage.googleapis.com/gambar-poster/${bucketName}/${posterFileName}`;
+    const posterUrl = `https://storage.googleapis.com/${bucketName}/${posterFileName}`;
 
     return posterUrl;
 }

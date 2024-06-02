@@ -55,7 +55,7 @@ router.post("/register", validateRegisterEdit, async (req, res) => {
 });
 
 // Login user
-router.get("/login", validateLogin, async (req, res) => {
+router.post("/login", validateLogin, async (req, res) => {
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {

@@ -298,7 +298,7 @@ function tampilkanFilm(data){
       ${plot}
       </span>
       <br>
-      <button class="knowmore" id="${id_film}">Know More</button>
+      <button class="knowmore" id="${id_film}" onclick=tampilPopupDetail(${id_film})>Detail</button>
       <button class="edit btn-edit" id="${id_film}" onclick=tampilPopupForm(${id_film})>Edit</button>
       <button class="delete" id="${id_film}" onclick=hapusFilm(${id_film})>Delete</button>
       </span>
@@ -386,10 +386,51 @@ function tampilPopupForm(id_film = null) {
   
 }
 
+function tampilPopupForm(id_film) {
+ 
+    btnForm.innerText = "Edit Film";
+  
+    axios
+    .get(`${BASE_url}/film/${id_film}`)
+    .then(({ data }) => {
+      const { data: film } = data;
+
+      const gambarPoster = document.getElementById("gambar-poster-film");
+      gambarPoster.src = film.poster
+      gambarPoster.style.display = "block";
+
+      document.getElementById("judul-film").value = film.judul;
+      document.getElementById("judul-film").dataset.id = film.id_film;
+      // const poster = document.getElementById("poster-film").value = film.poster;
+      document.getElementById("tahun_rilis-film").value = film.tahun_rilis;
+      document.getElementById("genre-film").value = film.genre;
+      document.getElementById("rating-film").value = film.rating;
+      document.getElementById("direktor-film").value = film.direktor;
+      document.getElementById("plot-film").value = film.plot;
+      
+      
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
+
+ 
+  const overlayContent = document.getElementById('overlay-content');
+  document.getElementById("popup-form").style.width = "100%";
+
+  
+}
+
 
 function closeNav() {
     bersihinForm()
     const overlay = document.getElementById("popup-form");
     overlay.style.width = "0%";
+}
+
+function closeNavDetails() {
+  bersihinForm()
+  const overlay = document.getElementById("popup-detail");
+  overlay.style.width = "0%";
 }
 

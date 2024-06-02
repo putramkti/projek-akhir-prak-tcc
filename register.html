@@ -68,10 +68,16 @@
           }
         })
         .catch(error => {
-          console.error('Registration error:', error);
+          console.error('login error:', error);
+          let errorMessage;
+          if (Array.isArray(error.response.data.message)) {
+              errorMessage = error.response.data.message[0];
+          } else {
+              errorMessage = error.response.data.message;
+          }
           swal({
             title: "Error",
-            text: error.response.data.message[0],
+            text: errorMessage,
             icon: "error",
             button: "OK",
           });

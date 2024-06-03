@@ -87,7 +87,7 @@ router.post("/login", validateLogin, async (req, res) => {
   }
 });
 
-router.put("/:id", validateRegisterEdit, async (req, res) => {
+router.put("/:id", validateRegister, async (req, res) => {
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {

@@ -5,7 +5,7 @@ const { check, validationResult } = require('express-validator');
 const crypto = require('crypto');
 
 // Validasi untuk email, nama, dan password saat registrasi
-const validateRegisterEdit = [
+const validateRegister = [
   check('nama').not().isEmpty().withMessage('Nama tidak boleh kosong'),
   check('email').isEmail().withMessage('Email tidak valid'),
   check('password').isLength({ min: 8 }).withMessage('Password harus minimal 8 karakter')
@@ -18,11 +18,11 @@ const validateLogin = [
 ];
 
 // Register user
-router.post("/register", validateRegisterEdit, async (req, res) => {
+router.post("/register", validateRegister, async (req, res) => {
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      return res.status(400).json({ status: "Error", message: errors.array().map(error => error.msg) });
     }
 
     const { nama, email, password} = req.body;
